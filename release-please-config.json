@@ -1,5 +1,5 @@
 {
-    "changelogSections": [
+    "changelog-sections": [
       { "type": "feat", "section": "Features" },
       { "type": "fix", "section": "Bug Fixes" },
       { "type": "bug", "section": "Bug Fixes" },
