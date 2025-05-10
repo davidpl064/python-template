@@ -1,0 +1,23 @@
+{
+    "editor.tabSize": 4,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "python.languageServer": "Pylance",
+    "workbench.colorTheme": "Default Dark+",
+    "python.testing.pytestArgs": [
+        "."
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "isort.args": [
+        "--settings=pyproject.toml"
+    ],
+    "flake8.args": [
+        "--config=pyproject.toml"
+    ],
+    "mypy.runUsingActiveInterpreter": true,
+    "mypy.configFile": "pyproject.toml"
+}
