@@ -24,6 +24,9 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
 
+      - name: Mark Git directory as safe (needed when using Github runners)
+        run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Tag major and minor versions
         if: ${{ steps.release.outputs.release_created }}
         run: |
