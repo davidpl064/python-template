@@ -1,0 +1,33 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        args: [--markdown-linebreak-ext=md]
+      - id: check-yaml
+      - id: end-of-file-fixer
+  - repo: https://github.com/timothycrosley/isort
+    rev: 6.0.1
+    hooks:
+      - id: isort
+        additional_dependencies: [toml]
+  - repo: https://github.com/pycqa/flake8.git
+    rev: 7.2.0
+    hooks:
+      - id: flake8
+        additional_dependencies:
+        - 'flake8-docstrings'
+        - 'Flake8-pyproject'
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.15.0
+    hooks:
+      - id: mypy
+        additional_dependencies:
+        - 'pydantic'
+        - 'pydantic_core'
+        - 'types-PyYAML'
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+      - id: black
+        additional_dependencies: ['click==8.0.4']
