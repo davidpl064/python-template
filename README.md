@@ -1,7 +1,7 @@
 # Python Template
 [![CI](https://github.com/davidpl064/python-template/actions/workflows/ci.yml/badge.svg)](https://github.com/davidpl064/python-template/actions/workflows/ci.yml)
 
-This repository aims to serve as a Python project template, providing all necessary framework (management tool, Github workflows, structure), simplifying creation of new repositories.
+This repository aims to serve as a Python project template, providing all necessary framework (management tool, Github workflows, structure), simplifying creation and configuration of new repositories.
 
 ## Project management tool
 There are two main project management tools which can be used depending on project's requirements in terms of used programming languages and needed external dependencies, namely `uv` and `pixi`.

@@ -31,6 +31,7 @@ jobs:
 
       - name: Install module and dependencies
         run: |
+          git status
           make install-dev
 
       - name: Lint
