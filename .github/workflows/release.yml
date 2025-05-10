@@ -20,7 +20,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: python
-          config-file: release-please-config.json
+          config-file: .github/release-please-config.json
 
       - name: Checkout the repository
         uses: actions/checkout@v4
