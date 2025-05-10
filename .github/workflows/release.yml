@@ -15,11 +15,6 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
       - uses: googleapis/release-please-action@v4
         id: release
         with:
@@ -28,8 +23,8 @@ jobs:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
-      # - name: Checkout the repository
-      #   uses: actions/checkout@v4
+      - name: Checkout the repository
+        uses: actions/checkout@v4
 
       - name: Mark Git directory as safe (needed when using Github runners)
         run: git config --global --add safe.directory "$GITHUB_WORKSPACE"

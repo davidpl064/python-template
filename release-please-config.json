@@ -6,12 +6,12 @@
   },
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "changelog-sections": [
-    { "type": "feat", "section": "Features" },
-    { "type": "fix", "section": "Bug Fixes" },
-    { "type": "bug", "section": "Bug Fixes" },
-    { "type": "perf", "section": "Enhancements" },
-    { "type": "refactor", "section": "Refactoring" },
-    { "type": "chore", "section": "Chore" },
-    { "type": "style", "section": "Style"}
+    { "type": "feat", "section": "Features", "hidden": false },
+    { "type": "fix", "section": "Bug Fixes", "hidden": false },
+    { "type": "bug", "section": "Bug Fixes", "hidden": false },
+    { "type": "perf", "section": "Enhancements", "hidden": false },
+    { "type": "refactor", "section": "Refactoring", "hidden": false },
+    { "type": "chore", "section": "Chore", "hidden": false },
+    { "type": "style", "section": "Style", "hidden": false }
   ]
 }
