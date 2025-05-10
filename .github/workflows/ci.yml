@@ -1,0 +1,121 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    container:
+      image: python:3.11-slim
+    steps:
+      - name: Install basic dependencies
+        run: |
+          apt-get update
+          apt-get install -y git curl make
+          curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+          apt-get install -y nodejs
+
+      - name: "Checkout the repository"
+        uses: actions/checkout@v4
+
+      - name: "Install uv"
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install module and dependencies
+        run: |
+          make install-dev
+
+      - name: Lint
+        run: make lint
+
+      - name: Unit tests with pytest
+        run: |
+          uv run pytest -svv ./tests/unit --doctest-modules --junitxml=./reports/junit-result.xml
+
+      - name: Full tests with pytest and coverage
+        run: make test-cov
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: cov-summary
+          path: reports/coverage.xml
+          if-no-files-found: error
+
+  security:
+    needs: test
+    runs-on: ubuntu-latest
+    container:
+      image: python:3.11-slim
+
+    steps:
+      - name: Install basic dependencies
+        run: |
+          apt-get update
+          apt-get install -y git curl make
+          curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+          apt-get install -y nodejs
+
+      - name: "Checkout the repository"
+        uses: actions/checkout@v4
+
+      - name: "Install uv"
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install module and dependencies
+        run: |
+          make install-dev
+
+      - name: Bandit security check
+        uses: Joel-hanson/bandit-report-artifacts@V1
+        with:
+          python_version: "3.11"
+          project_path: ./python_template/
+          ignore_failure: true
+
+      - name: Create requirements.txt for next action
+        run: |
+          uv export --format requirements-txt > requirements.txt
+
+      - name: Security vulnerabilities scan
+        run: |
+          uv run safety check -r requirements.txt
+
+      - name: Report Bandit security check
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-report
+          path: output/security_report.txt
+
+  coverage-to-pr:
+      needs: test
+      runs-on: ubuntu-latest
+      timeout-minutes: 20
+      steps:
+        - uses: actions/download-artifact@v4
+          with:
+            name: cov-summary
+
+        - name: Code Coverage Summary
+          uses: 5monkeys/cobertura-action@master
+          with:
+            path: coverage.xml
+            fail_below_threshold: false
+            show_line: true
+            show_missing: true
+            minimum_coverage: 80
+
+        - name: Delete Artifact
+          uses: GeekyEggo/delete-artifact@v2.0.0
+          with:
+            name: cov-summary

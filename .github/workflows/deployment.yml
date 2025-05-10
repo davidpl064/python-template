@@ -1,0 +1,94 @@
+name: deployment
+
+on:
+  release:
+    types: [created]
+  workflow_dispatch:
+
+env:
+  NEXUS_URL: ${{ secrets.NEXUS_URL }}
+  UV_INDEX_NEXUS_USERNAME: ${{ secrets.NEXUS_USER }}
+  UV_INDEX_NEXUS_PASSWORD: ${{ secrets.NEXUS_PASS }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    container:
+      image: ubuntu:latest
+    steps:
+      - name: Install basic dependencies
+        run: |
+          apt-get update
+          apt-get install -y git curl make
+          curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+          apt-get install -y nodejs
+
+      - name: "Checkout the repository"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: "Install uv"
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: "Setup Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: Install dependencies
+        run: make install-dev
+
+      - name: Build package
+        run: make build
+
+      - name: Upload package to cloud storage
+        run: |
+          uv run twine upload --repository-url https://$NEXUS_URL/ -u $UV_INDEX_NEXUS_USERNAME -p $UV_INDEX_NEXUS_PASSWORD dist/*.whl
+
+  test-build:
+    needs: build
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:latest
+    steps:
+      - name: Install basic dependencies
+        run: |
+          apt-get update
+          apt-get install -y git curl make
+          curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+          apt-get install -y nodejs
+
+      - name: "Checkout the repository"
+        uses: actions/checkout@v4
+
+      - name: "Install uv"
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: "Setup Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: Download built package from index and install
+        run: |
+          uv venv
+          uv pip install --extra-index-url=https://${NEXUS_URL}/simple va-pythontemplate
+
+      - name: Full tests with pytest
+        run: |
+          uv pip install pytest
+          make test
+
+  deploy:
+    needs: test-build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy package to environment
+        run: ls
