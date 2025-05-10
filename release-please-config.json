@@ -3,7 +3,7 @@
       { "type": "feat", "section": "Features" },
       { "type": "fix", "section": "Bug Fixes" },
       { "type": "bug", "section": "Bug Fixes" },
-      { "type": "perf", "section": "Performance Improvements" },
+      { "type": "perf", "section": "Enhancements" },
       { "type": "refactor", "section": "Refactoring" },
       { "type": "chore", "section": "Chore" }
     ]
