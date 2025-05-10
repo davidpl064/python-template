@@ -19,9 +19,7 @@ jobs:
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          # release-type: python
           config-file: release-please-config.json
-          manifest-file: .release-please-manifest.json
 
       - name: Checkout the repository
         uses: actions/checkout@v4
