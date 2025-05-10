@@ -1,0 +1,167 @@
+[project]
+name = "python-template"
+dynamic = ["version"]
+description = "Brief description of the module functionality."
+authors = [
+    { name = "David Perez Lamarca", email = "davi.perlam@gmail.com" },
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fire",
+    "jsonschema",
+    "loguru",
+    "matplotlib",
+    "numpy",
+    "pip",
+    "pydantic",
+    "pydantic-settings",
+    "pyyaml"
+]
+
+# Specify other group dependencies
+[dependency-groups]
+test = ["pytest >=7.0", "pytest-cov >=3.0"]
+dev = [
+    "black",
+    "build",
+    "flake8-pyproject",
+    "mypy",
+    "pre-commit",
+    "pytest",
+    "pytest-cov",
+    "safety",
+    "twine",
+    "wheel",
+]
+
+[project.urls]
+homepage = "https://github.com/davidpl064/python-template"
+"Bug Tracker" = "https://github.com/davidpl064/python-template/issues"
+
+[project.scripts]
+my_package_cli = 'my_package.console:run'
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.raw-options]
+git_describe_command = "git describe --dirty --tags --long --match 'v[0-9]*.[0-9]*.[0-9]*'"
+version_scheme = "no-guess-dev"
+
+[tool.uv]
+default-groups = []
+
+[tool.uv.sources]
+custom_gradiant_package_from_nexus = { index = "nexus" }
+
+[[tool.uv.index]]
+name = "nexus"
+url = "https://repo/simple"
+publish-url = "https://repo"
+explicit = true  # only use this index for the pinned packages.
+authenticate = "always"
+
+[tool.pixi.project]
+channels = ["conda-forge", "pytorch"]
+platforms = ["linux-64"]
+preview = ["pixi-build"]
+
+[tool.pixi.dependencies]
+python = "3.11.*"
+
+[tool.pixi.system-requirements]
+
+# Needed to build the project
+[tool.pixi.pypi-dependencies]
+python-template = { path = ".", editable = true }
+
+[tool.pixi.feature.second-env]
+dependencies = { python = "3.11.*" }
+pypi-dependencies = { jsonschema = "*", loguru = "*", matplotlib = "*", numpy = "*", pip = "*", pydantic = "*", pydantic-settings = "*", PyQt5 = "*", pyyaml = "*" }
+platforms = ["linux-64"]
+system-requirements = {}
+channels = ["conda-forge", "pytorch"]
+
+[tool.pixi.environments]
+default = { solve-group = "default" }
+second-env = { features = ["second-env"], no-default-feature = true }
+dev = { features = ["dev"], solve-group = "default" }
+test = { features = ["test"], solve-group = "default" }
+
+[tool.pixi.tasks]
+run = "python3 python_template/main.py"
+
+[tool.pixi.package.build]
+backend = { name = "pixi-build-python", version = "0.1.*" }
+
+[tool.pytest]
+log_cli = true
+log_level = "DEBUG"
+
+[tool.black]
+line-length = 100
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+
+[tool.flake8]
+max-line-length = 100
+max-complexity = 18
+docstring-convention = "google"
+ignore = [
+    # Exclude errors conflicting with black
+    "W503",
+    "E203",
+    # Exclude some unnecesarry errors
+    "D104",
+    "D105",
+    "D212",
+    "D200",
+    "D107",
+    "D100",
+    "D205",
+    "D415"
+]
+exclude = [
+    # No need to traverse our git directory
+    ".git",
+    # There's no value in checking cache directories
+    "__pycache__",
+    ".mpy_cache",
+    ".pytest_cache",
+]
+per-file-ignores = ["tests/*: D1"]
+
+[tool.mypy]
+strict = true
+disallow_untyped_calls = false
+disallow_untyped_decorators = false
+
+[[tool.mypy.overrides]]
+module = ["fire", "pydantic", "pydantic_core", "yaml"]
+ignore_missing_imports = true
