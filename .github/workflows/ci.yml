@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     container:
-      image: python:3.12-slim
+      image: python:3.13-slim
     steps:
       - name: Install basic dependencies
         run: |
@@ -57,7 +57,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     container:
-      image: python:3.12-slim
+      image: python:3.13-slim
 
     steps:
       - name: Install basic dependencies
@@ -85,7 +85,7 @@ jobs:
       - name: Bandit security check
         uses: Joel-hanson/bandit-report-artifacts@V1
         with:
-          python_version: "3.11"
+          python_version: "3.13"
           project_path: ./python_template/
           ignore_failure: true
 
