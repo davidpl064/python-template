@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/davidpl064/python-template/compare/v0.2.0...v0.2.1) (2025-05-10)
+
+
+### Bug Fixes
+
+* remove corrupted v0.1.0 release from changelog ([1304bb6](https://github.com/davidpl064/python-template/commit/1304bb673f01988782b01a48e66def2a85294cdc))
+
 ## [0.2.0](https://github.com/davidpl064/python-template/compare/v0.1.0...v0.2.0) (2025-05-10)
 
 
