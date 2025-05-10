@@ -107,6 +107,13 @@ jobs:
       needs: test
       runs-on: ubuntu-latest
       timeout-minutes: 20
+      permissions:
+        actions: write
+        contents: read
+        packages: read
+        pull-requests: write
+        checks: write
+        issues: write
       steps:
         - uses: actions/download-artifact@v4
           with:
@@ -122,6 +129,6 @@ jobs:
             minimum_coverage: 80
 
         - name: Delete Artifact
-          uses: GeekyEggo/delete-artifact@v2.0.0
+          uses: geekyeggo/delete-artifact@v5
           with:
             name: cov-summary
