@@ -1,5 +1,5 @@
 # Python Template
-[![CI](https://github.com/davidpl064/python-template/actions/workflows/ci.yml/badge.svg)](https://github.com/davidpl064/python-template/actions/workflows/ci.yml)
+[![CI](https://github.com/davidpl064/python-template/actions/workflows/ci.yml/badge.svg)](https://github.com/davidpl064/python-template/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/davidpl064/python-template/graph/badge.svg?token=W8BPFU7M89)](https://codecov.io/gh/davidpl064/python-template)
 
 This repository aims to serve as a Python project template, providing all necessary framework (management tool, Github workflows, structure), simplifying creation and configuration of new repositories.
 

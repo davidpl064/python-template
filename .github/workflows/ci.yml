@@ -46,6 +46,19 @@ jobs:
       - name: Full tests with pytest and coverage
         run: make test-cov
 
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./reports/junit-result.xml
+
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./reports/coverage.xml
+
       - name: Upload coverage
         uses: actions/upload-artifact@v4
         with:
