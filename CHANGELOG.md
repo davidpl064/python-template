@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.2](https://github.com/davidpl064/python-template/compare/v0.2.1...v0.2.2) (2025-05-11)
+
+
+### Chore
+
+* add coverage badge to README ([d33f780](https://github.com/davidpl064/python-template/commit/d33f780a30341adfaa3039250e2d4fdaa16e1a08))
+* add support to Codecov CI actions ([f3be173](https://github.com/davidpl064/python-template/commit/f3be173e5fd16c369c6f557a59fbdac64130ae4c))
+
 ## [0.2.1](https://github.com/davidpl064/python-template/compare/v0.2.0...v0.2.1) (2025-05-10)
 
 
