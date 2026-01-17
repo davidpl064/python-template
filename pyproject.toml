@@ -16,9 +16,9 @@ dependencies = [
     "fire",
     "jsonschema",
     "loguru",
-    "matplotlib",
+    "matplotlib >= 3.10.5",
     "numpy",
-    "pip",
+    "pip >= 25.2",
     "pydantic",
     "pydantic-settings",
     "pyyaml"
@@ -28,15 +28,22 @@ dependencies = [
 [dependency-groups]
 test = ["pytest >=7.0", "pytest-cov >=3.0"]
 dev = [
+    "bandit[sarif]",
     "black",
     "build",
+    "filelock >= 3.20.3",
+    "fonttools >= 4.60.2",
     "flake8-pyproject",
     "mypy",
-    "pre-commit",
+    "pillow >= 11.3.0",
+    "pip-audit >=2.6",
+    "pre-commit >= 4.5",
     "pytest",
     "pytest-cov",
-    "safety",
+    "requests >= 2.32.4",
     "twine",
+    "urllib3 >= 2.6.3",
+    "virtualenv >= 20.36.1",
     "wheel",
 ]
 
@@ -62,7 +69,7 @@ version_scheme = "no-guess-dev"
 default-groups = []
 
 [tool.uv.sources]
-custom_gradiant_package_from_nexus = { index = "nexus" }
+custom_package_from_nexus = { index = "nexus" }
 
 [[tool.uv.index]]
 name = "nexus"

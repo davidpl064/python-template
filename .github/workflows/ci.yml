@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     container:
-      image: python:3.13-slim
+      image: python:3.14-slim
     steps:
       - name: Install basic dependencies
         run: |
@@ -46,11 +46,11 @@ jobs:
       - name: Full tests with pytest and coverage
         run: make test-cov
 
-      - name: Upload test results to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@v1
+      - name: Upload tests results to Codecov
+        uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          report_type: test_results
           files: ./reports/junit-result.xml
 
       - name: Upload coverage report to Codecov
@@ -70,14 +70,14 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     container:
-      image: python:3.13-slim
+      image: python:3.14-slim
 
     steps:
       - name: Install basic dependencies
         run: |
           apt-get update
           apt-get install -y git curl make
-          curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+          curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
           apt-get install -y nodejs
 
       - name: "Checkout the repository"
@@ -95,26 +95,25 @@ jobs:
         run: |
           make install-dev
 
-      - name: Bandit security check
-        uses: Joel-hanson/bandit-report-artifacts@V1
-        with:
-          python_version: "3.13"
-          project_path: ./python_template/
-          ignore_failure: true
+      - name: Run Bandit
+        run: |
+          uv run bandit -r ./python_template \
+            -f sarif \
+            -o bandit_report.sarif \
+            || true
 
       - name: Create requirements.txt for next action
         run: |
           uv export --format requirements-txt > requirements.txt
 
-      - name: Security vulnerabilities scan
+      - name: Security vulnerabilities scan on dependencies
         run: |
-          uv run safety check -r requirements.txt
+          uv run pip-audit
 
-      - name: Report Bandit security check
-        uses: actions/upload-artifact@v4
+      - uses: github/codeql-action/upload-sarif@v4
         with:
-          name: security-report
-          path: output/security_report.txt
+          token: ${{ secrets.GITHUB_TOKEN }}
+          sarif_file: bandit_report.sarif
 
   coverage-to-pr:
       needs: test
