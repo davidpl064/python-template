@@ -105,14 +105,12 @@ jobs:
       - name: Security vulnerabilities scan on dependencies
         uses: pypa/gh-action-pip-audit@v1.1.0
         with:
-          inputs: .
+          inputs: ./pyproject.toml
 
       - uses: github/codeql-action/upload-sarif@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          sarif_file: |
-            pip-audit.sarif
-            bandit_report.sarif
+          sarif_file: bandit_report.sarif
 
   coverage-to-pr:
       needs: test
