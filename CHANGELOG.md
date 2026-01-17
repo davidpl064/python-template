@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.2.3](https://github.com/davidpl064/python-template/compare/v0.2.2...v0.2.3) (2026-01-17)
+
+
+### Bug Fixes
+
+* add sarif support to bandit ([6fa9086](https://github.com/davidpl064/python-template/commit/6fa908695f1e44f6d22e99d36c9912630c79bad7))
+* errata in codecov action description ([b802cfa](https://github.com/davidpl064/python-template/commit/b802cfadae00568ca1a73e1079788e9e96568457))
+* errata in pip-audit action ([34102c5](https://github.com/davidpl064/python-template/commit/34102c524a66ba7f11fc90f11cdc58ae41f438f4))
+* further correction pip-audit action ([c62fcda](https://github.com/davidpl064/python-template/commit/c62fcdabf08a7f51cb909009a9ca05ecca5718f2))
+* replace safety security library with pip-audit ([c3a4f3c](https://github.com/davidpl064/python-template/commit/c3a4f3c378de637127ff066d9653c4667d83b65e))
+* update bandit action ([7c9bfbf](https://github.com/davidpl064/python-template/commit/7c9bfbf3e3f1dfcd140c5d2c168dede36a2a911e))
+* update codecov workflow action for test results ([d844c37](https://github.com/davidpl064/python-template/commit/d844c37ae0138f137980691bcd07fadb300a9edb))
+
+
+### Chore
+
+* added codecov config. file ([99620b2](https://github.com/davidpl064/python-template/commit/99620b28d23037856689d8da300859ad3fbd4925))
+* update dependencies lock file ([82c8dd4](https://github.com/davidpl064/python-template/commit/82c8dd4b8f3166a58889254e848e7be47b337e83))
+
 ## [0.2.2](https://github.com/davidpl064/python-template/compare/v0.2.1...v0.2.2) (2025-05-11)
 
 
