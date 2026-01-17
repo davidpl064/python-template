@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     container:
-      image: python:3.13-slim
+      image: python:3.14-slim
     steps:
       - name: Install basic dependencies
         run: |
@@ -70,14 +70,14 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     container:
-      image: python:3.13-slim
+      image: python:3.14-slim
 
     steps:
       - name: Install basic dependencies
         run: |
           apt-get update
           apt-get install -y git curl make
-          curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+          curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
           apt-get install -y nodejs
 
       - name: "Checkout the repository"
@@ -102,10 +102,13 @@ jobs:
             -o bandit_report.sarif \
             || true
 
+      - name: Create requirements.txt for next action
+        run: |
+          uv export --format requirements-txt > requirements.txt
+
       - name: Security vulnerabilities scan on dependencies
-        uses: pypa/gh-action-pip-audit@v1.1.0
-        with:
-          inputs: .
+        run: |
+          uv run pip-audit
 
       - uses: github/codeql-action/upload-sarif@v4
         with:
