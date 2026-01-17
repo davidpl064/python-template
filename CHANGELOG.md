@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.4](https://github.com/davidpl064/python-template/compare/v0.2.3...v0.2.4) (2026-01-17)
+
+
+### Bug Fixes
+
+* added security permissions to scan tools ([5ab6ad7](https://github.com/davidpl064/python-template/commit/5ab6ad784f2ea6af1c9e9e1b3f66a490c1a6a61c))
+
 ## [0.2.3](https://github.com/davidpl064/python-template/compare/v0.2.2...v0.2.3) (2026-01-17)
 
 
