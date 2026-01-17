@@ -71,6 +71,14 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: python:3.14-slim
+    permissions:
+      security-events: write
+
+      # Required to fetch internal or private CodeQL packs
+      packages: read
+
+      actions: read
+      contents: read
 
     steps:
       - name: Install basic dependencies
