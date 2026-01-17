@@ -46,7 +46,7 @@ jobs:
       - name: Full tests with pytest and coverage
         run: make test-cov
 
-      - name: Upload coverage report to Codecov
+      - name: Upload tests results to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
