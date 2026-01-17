@@ -95,12 +95,12 @@ jobs:
         run: |
           make install-dev
 
-      - name: Bandit security check
-        uses: Joel-hanson/bandit-report-artifacts@V1
-        with:
-          python_version: "3.13"
-          project_path: ./python_template/
-          ignore_failure: true
+      - name: Run Bandit
+        run: |
+          bandit -r ./python_template \
+            -f txt \
+            -o security_report.txt \
+            || true
 
       - name: Create requirements.txt for next action
         run: |
