@@ -97,7 +97,7 @@ jobs:
 
       - name: Run Bandit
         run: |
-          bandit -r ./python_template \
+          uv run bandit -r ./python_template \
             -f sarif \
             -o bandit_report.sarif \
             || true
@@ -105,7 +105,7 @@ jobs:
       - name: Security vulnerabilities scan on dependencies
         uses: pypa/gh-action-pip-audit@v1.1.0
         with:
-          inputs: ./pyproject.toml
+          inputs: .
 
       - uses: github/codeql-action/upload-sarif@v4
         with:
