@@ -62,7 +62,7 @@ version_scheme = "no-guess-dev"
 default-groups = []
 
 [tool.uv.sources]
-custom_gradiant_package_from_nexus = { index = "nexus" }
+custom_package_from_nexus = { index = "nexus" }
 
 [[tool.uv.index]]
 name = "nexus"
