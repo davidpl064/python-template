@@ -18,7 +18,7 @@ dependencies = [
     "loguru",
     "matplotlib",
     "numpy",
-    "pip",
+    "pip >= 25.2",
     "pydantic",
     "pydantic-settings",
     "pyyaml"
@@ -33,10 +33,10 @@ dev = [
     "build",
     "flake8-pyproject",
     "mypy",
+    "pip-audit >=2.6",
     "pre-commit",
     "pytest",
     "pytest-cov",
-    "safety",
     "twine",
     "wheel",
 ]

@@ -98,23 +98,21 @@ jobs:
       - name: Run Bandit
         run: |
           bandit -r ./python_template \
-            -f txt \
-            -o security_report.txt \
+            -f sarif \
+            -o bandit_report.sarif \
             || true
 
-      - name: Create requirements.txt for next action
-        run: |
-          uv export --format requirements-txt > requirements.txt
-
-      - name: Security vulnerabilities scan
-        run: |
-          uv run safety check -r requirements.txt
-
-      - name: Report Bandit security check
-        uses: actions/upload-artifact@v4
+      - name: Security vulnerabilities scan on dependencies
+        uses: pypa/gh-action-pip-audit@v1.1.0
         with:
-          name: security-report
-          path: output/security_report.txt
+          inputs: .
+
+      - uses: github/codeql-action/upload-sarif@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          sarif_file: |
+            pip-audit.sarif
+            bandit_report.sarif
 
   coverage-to-pr:
       needs: test
