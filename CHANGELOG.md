@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.5](https://github.com/davidpl064/python-template/compare/v0.2.4...v0.2.5) (2026-01-26)
+
+
+### Bug Fixes
+
+* use pip-audit with non-blocking exit error step ([84f636e](https://github.com/davidpl064/python-template/commit/84f636e57e6fc6b9518f09ee2d9400677790577b))
+
+
+### Chore
+
+* add codeql analysis to security CI workflow ([e427de6](https://github.com/davidpl064/python-template/commit/e427de648c60aa59529255a3cc903411fed7cfef))
+* enhance pip-audit command, visible warnings when vunerabilities are found ([ba51892](https://github.com/davidpl064/python-template/commit/ba518922764d33f3b1fb064b8106df289c8e5862))
+* replace isor, flake8 with ruff ([e5f64ca](https://github.com/davidpl064/python-template/commit/e5f64caa5e60e26a60265f6a3736058bc95e470b))
+
 ## [0.2.4](https://github.com/davidpl064/python-template/compare/v0.2.3...v0.2.4) (2026-01-17)
 
 
