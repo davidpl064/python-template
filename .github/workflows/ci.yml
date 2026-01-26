@@ -117,6 +117,16 @@ jobs:
       - name: Security vulnerabilities scan on dependencies
         run: |
           uv run pip-audit
+        continue-on-error: true
+
+      - uses: github/codeql-action/init@v4
+        with:
+          languages: python
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:python"
 
       - uses: github/codeql-action/upload-sarif@v4
         with:
