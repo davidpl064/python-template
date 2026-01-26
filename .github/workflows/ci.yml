@@ -114,12 +114,23 @@ jobs:
         run: |
           uv export --format requirements-txt > requirements.txt
 
-      - name: Security vulnerabilities scan on dependencies
+      - name: Pip-audit security vulnerabilities scan on dependencies
         run: |
-          uv run pip-audit
-        continue-on-error: true
+          set +e
+          # Run pip-audit via uv
+          output=$(uv run pip-audit --format json)
+          status=$?
 
-      - uses: github/codeql-action/init@v4
+          echo "$output"
+
+          if [ $status -ne 0 ]; then
+            echo "::warning::pip-audit found vulnerabilities"
+          fi
+
+          exit 0
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
         with:
           languages: python
 
