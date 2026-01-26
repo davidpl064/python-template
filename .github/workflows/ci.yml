@@ -116,18 +116,8 @@ jobs:
 
       - name: Pip-audit security vulnerabilities scan on dependencies
         run: |
-          set +e
-          # Run pip-audit via uv
-          output=$(uv run pip-audit --format json)
-          status=$?
-
-          echo "$output"
-
-          if [ $status -ne 0 ]; then
-            echo "::warning::pip-audit found vulnerabilities"
-          fi
-
-          exit 0
+          uv run pip-audit
+        continue-on-error: true
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
