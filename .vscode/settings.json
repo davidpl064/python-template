@@ -12,12 +12,7 @@
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
-    "isort.args": [
-        "--settings=pyproject.toml"
-    ],
-    "flake8.args": [
-        "--config=pyproject.toml"
-    ],
+    "ruff.configuration": "pyproject.toml",
     "mypy.runUsingActiveInterpreter": true,
     "mypy.configFile": "pyproject.toml"
 }

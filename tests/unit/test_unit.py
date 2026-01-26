@@ -1,14 +1,14 @@
 import ipaddress
 
-import pytest
 from pydantic import ValidationError
+import pytest
 
 from python_template.data.urls import UdpUrl, UrlConstraints
 from python_template.data.user_data import UserData, UserEntry
 
 
 def is_valid_ipv4(ip: str) -> bool:
-    """Validate format of IP address
+    """Validate format of IP address.
 
     Args:
         ip (str): IP address.
@@ -21,14 +21,15 @@ def is_valid_ipv4(ip: str) -> bool:
     """
     try:
         ipaddress.IPv4Address(ip)
+    except ipaddress.AddressValueError as err:
+        raise ValueError("Invalid IPv4 address") from err
+    else:
         return True
-    except ipaddress.AddressValueError:
-        raise ValueError("Invalid IPv4 address")
 
 
 class TestUserData:
     @pytest.mark.parametrize(
-        "input_ip, expected_valid, expected_error",
+        ("input_ip", "expected_valid", "expected_error"),
         [
             # Valid IPv4 addresses
             ("192.168.1.1", True, None),
@@ -54,7 +55,7 @@ class TestUserData:
                 is_valid_ipv4(input_ip)
 
     @pytest.mark.parametrize(
-        "good_udp_urls, bad_udp_urls",
+        ("good_udp_urls", "bad_udp_urls"),
         [
             (
                 [
@@ -81,7 +82,7 @@ class TestUserData:
                 UdpUrl(url=bad_url)
 
     @pytest.mark.parametrize(
-        "user_good_entries, bad_user_entries",
+        ("user_good_entries", "bad_user_entries"),
         [
             (
                 [
@@ -104,14 +105,16 @@ class TestUserData:
     def test_user_entries(
         self, user_good_entries: list[tuple[str, int]], bad_user_entries: list[tuple[str, int]]
     ) -> None:
-        user_entries_parsed = []
-        for good_entry in user_good_entries:
-            user_entries_parsed.append(
-                UserEntry(url=UdpUrl(url=good_entry[0]), value=good_entry[1])
+        user_entries_parsed = [
+            UserEntry(
+                url=UdpUrl(url=good_entry[0]),
+                value=good_entry[1],
             )
+            for good_entry in user_good_entries
+        ]
 
         for bad_entry in bad_user_entries:
             with pytest.raises(ValidationError):
                 UserEntry(url=UdpUrl(url=bad_entry[0]), value=bad_entry[1])
 
-        UserData(**{"users": user_entries_parsed})
+        UserData(users=user_entries_parsed)

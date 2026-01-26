@@ -6,18 +6,14 @@ repos:
         args: [--markdown-linebreak-ext=md]
       - id: check-yaml
       - id: end-of-file-fixer
-  - repo: https://github.com/timothycrosley/isort
-    rev: 6.0.1
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.14
     hooks:
-      - id: isort
-        additional_dependencies: [toml]
-  - repo: https://github.com/pycqa/flake8.git
-    rev: 7.2.0
-    hooks:
-      - id: flake8
-        additional_dependencies:
-        - 'flake8-docstrings'
-        - 'Flake8-pyproject'
+      # Run the linter
+      - id: ruff-check
+        args: [ --fix ]
+      # Run the formatter
+      - id: ruff-format
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.15.0
     hooks:

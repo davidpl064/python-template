@@ -1,6 +1,6 @@
 import json
-import tempfile
 from pathlib import Path
+import tempfile
 
 from loguru import logger
 
@@ -19,7 +19,7 @@ class Reporter:
 
         with tempfile.TemporaryDirectory() as temp_dir:
             temp_file = Path(temp_dir).resolve() / "results.json"
-            with open(temp_file, "w") as f:
+            with Path.open(temp_file, "w") as f:
                 json.dump(results.model_dump(), f)
 
         logger.info("Results saved.")
