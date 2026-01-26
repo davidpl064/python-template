@@ -18,12 +18,10 @@ class TestIntegration:
         """Test the entire pipeline with mocked input/output blocks."""
         # Mock "DataReader" to return custom data instead of real execution
         mock_data_reader.return_value = UserData(
-            **{
-                "users": [
-                    UserEntry(url=UdpUrl(url="udp://192.168.0.0:1000"), value=4),
-                    UserEntry(url=UdpUrl(url="udp://192.168.0.1:2000"), value=9),
-                ]
-            }
+            users=[
+                UserEntry(url=UdpUrl(url="udp://192.168.0.0:1000"), value=4),
+                UserEntry(url=UdpUrl(url="udp://192.168.0.1:2000"), value=9),
+            ]
         )
 
         # Run the main pipeline
@@ -34,12 +32,10 @@ class TestIntegration:
 
         # Verify `process_data()` is called with mock's return value
         expected_processed_data = UserData(
-            **{
-                "users": [
-                    UserEntry(url=UdpUrl(url="udp://192.168.0.0:1000"), value=16),
-                    UserEntry(url=UdpUrl(url="udp://192.168.0.1:2000"), value=81),
-                ]
-            }
+            users=[
+                UserEntry(url=UdpUrl(url="udp://192.168.0.0:1000"), value=16),
+                UserEntry(url=UdpUrl(url="udp://192.168.0.1:2000"), value=81),
+            ]
         )
         for index, data_item in enumerate(mock_data_reader.return_value.users):
             assert data_item.value == expected_processed_data.users[index].value
@@ -55,7 +51,7 @@ class TestIntegration:
     def test_full_pipeline_fire_exec(self) -> None:
         """Execute entire pipeline using the CLI behaviour of fire library."""
         result = subprocess.run(
-            [sys.executable, "python_template/main.py"], capture_output=True, text=True
+            [sys.executable, "python_template/main.py"], check=True, capture_output=True, text=True
         )
 
         assert "Pipeline completed." in result.stderr  # Adjust based on your expected output
